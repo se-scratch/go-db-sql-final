@@ -170,7 +170,9 @@ func TestGetByClient(t *testing.T) {
 	for _, parcel := range storedParcels {
 		// в parcelMap лежат добавленные посылки, ключ - идентификатор посылки, значение - сама посылка
 		// убедитесь, что все посылки из storedParcels есть в parcelMap
+		p, ok := parcelMap[parcel.Number]
+		assert.True(t, ok)
 		// убедитесь, что значения полей полученных посылок заполнены верно
-		assert.Equal(t, parcel, parcelMap[parcel.Number])
+		assert.Equal(t, parcel, p)
 	}
 }
