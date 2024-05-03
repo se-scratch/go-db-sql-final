@@ -90,7 +90,7 @@ func TestSetAddress(t *testing.T) {
 	// получите добавленную посылку и убедитесь, что адрес обновился
 	p, err := store.Get(parcel.Number)
 	require.NoError(t, err)
-	assert.Equal(t, p.Address, newAddress)
+	assert.Equal(t, newAddress, p.Address)
 }
 
 // TestSetStatus проверяет обновление статуса
@@ -120,7 +120,7 @@ func TestSetStatus(t *testing.T) {
 	// получите добавленную посылку и убедитесь, что статус обновился
 	p, err := store.Get(parcel.Number)
 	require.NoError(t, err)
-	assert.Equal(t, p.Status, newStatus)
+	assert.Equal(t, newStatus, p.Status)
 }
 
 // TestGetByClient проверяет получение посылок по идентификатору клиента
@@ -167,11 +167,10 @@ func TestGetByClient(t *testing.T) {
 	assert.Equal(t, len(storedParcels), len(parcels))
 
 	// check
-	// Не очень понял зачем тут в цикле перебирать, поэтому убрал его в комментарии
-	assert.Equal(t, storedParcels, parcels)
-	//for _, parcel := range storedParcels {
-	// в parcelMap лежат добавленные посылки, ключ - идентификатор посылки, значение - сама посылка
-	// убедитесь, что все посылки из storedParcels есть в parcelMap
-	// убедитесь, что значения полей полученных посылок заполнены верно
-	//}
+	for _, parcel := range storedParcels {
+		// в parcelMap лежат добавленные посылки, ключ - идентификатор посылки, значение - сама посылка
+		// убедитесь, что все посылки из storedParcels есть в parcelMap
+		// убедитесь, что значения полей полученных посылок заполнены верно
+		assert.Equal(t, parcel, parcelMap[parcel.Number])
+	}
 }
